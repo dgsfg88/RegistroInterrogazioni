@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RegistroInterrogazioni.Model
+{
+	internal class Grade : IStudentNote
+	{
+		[Required]
+		public DateTime DateTime { get; set ; }
+		public string Notes {  get; set ; } = string.Empty;
+		[Required]
+		public int GradeValue { get; set ; }
+		[Required]
+		public double GradeCost { get; set; } = 1;
+	}
+}
