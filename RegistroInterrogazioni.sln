@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35728.132 d17.12
+VisualStudioVersion = 17.12.35728.132
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegistroInterrogazioni", "RegistroInterrogazioni.csproj", "{93FE66AB-05AD-42D9-AC44-87DB32C7B3F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegistroInterrogazioni", "RegistroInterrogazioni\RegistroInterrogazioni.csproj", "{93FE66AB-05AD-42D9-AC44-87DB32C7B3F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegistroInterrogazioni.Desktop", "RegistroInterrogazioni.Desktop\RegistroInterrogazioni.Desktop.csproj", "{90DA8B7D-7796-49D3-9EDB-C45037DD72E1}"
 EndProject
