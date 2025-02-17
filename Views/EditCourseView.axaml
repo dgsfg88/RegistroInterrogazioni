@@ -1,0 +1,73 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:RegistroInterrogazioni.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="RegistroInterrogazioni.EditCourseView"
+             x:DataType="vm:EditCourseViewModel">
+  <Grid Margin="2">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="auto"/>
+    </Grid.RowDefinitions>
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="auto"/>
+        <ColumnDefinition/>
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="auto"/>
+        <RowDefinition Height="auto"/>
+        <RowDefinition Height="auto"/>
+      </Grid.RowDefinitions>
+      <TextBlock Text="Name:" VerticalAlignment="Center"/>
+      <TextBox Grid.Column="1" 
+               Text="{Binding Course.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+      <TextBlock Text="Class:" Grid.Row="1" VerticalAlignment="Center"/>
+      <TextBox Grid.Column="1" Grid.Row="1"
+               Text="{Binding Course.ClassName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+      <Button Content="Apply" Grid.Row="2" Grid.Column="1" Command="{Binding ApplyChangesCommand}"
+              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+      
+    </Grid>
+    <HeaderedContentControl Header="Students" Grid.Row="1" VerticalAlignment="Stretch"
+                            VerticalContentAlignment="Stretch" Background="Azure">
+      <DataGrid ItemsSource="{Binding Students}" IsReadOnly="False"
+                ColumnWidth="*"
+                GridLinesVisibility="All">
+        <DataGrid.Columns>
+          <DataGridTextColumn Binding="{Binding LastName, Mode=TwoWay}" 
+                              Header="Last name"/>
+          <DataGridTextColumn Binding="{Binding Name, Mode=TwoWay}" 
+                              Header="Name"/>
+          <DataGridTemplateColumn Header="Delete">
+            <DataTemplate>
+              <Button Content="Delete"
+                      Command="{Binding $parent[DataGrid].((vm:EditCourseViewModel)DataContext).RemoveStudentCommand}"
+                      CommandParameter="{Binding}"/>
+            </DataTemplate>
+          </DataGridTemplateColumn>
+        </DataGrid.Columns>
+      </DataGrid>
+    </HeaderedContentControl>
+    <Grid Grid.Row="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="auto"/>
+        <ColumnDefinition/>
+        <ColumnDefinition Width="auto"/>
+        <ColumnDefinition/>
+        <ColumnDefinition Width="auto"/>
+      </Grid.ColumnDefinitions>
+      <TextBlock Text="Last name:" VerticalAlignment="Center"/>
+      <TextBox Grid.Column="1" 
+               Text="{Binding NewStudentLastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+      <TextBlock Text="Name:" Grid.Column="2" VerticalAlignment="Center"/>
+      <TextBox Grid.Column="3"
+               Text="{Binding NewStudentName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+      <Button Content="Add" Grid.Column="4"
+              Command="{Binding AddStudentCommand}"/>
+    </Grid>
+  </Grid>
+</UserControl>
