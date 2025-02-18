@@ -43,6 +43,11 @@ namespace RegistroInterrogazioni.Model
 					File.ReadAllText(path));
 		}
 
+		public void Delete(string id)
+		{
+			File.Delete(GetFilePath(id));
+		}
+
 		public List<Course> GetAllCourses()
 		{
 			DirectoryInfo directoryInfo = new DirectoryInfo(WorkingPath);
