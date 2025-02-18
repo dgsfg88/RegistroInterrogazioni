@@ -31,7 +31,7 @@ namespace RegistroInterrogazioni.ViewModels
 		public EditCourseViewModel(string courseID)
 		{
 			this.courseID = courseID;
-			_course = Course.CreateOrLoad(courseID);
+			_course = CourseManager.Instance.CreateOrLoad(courseID);
 
 			_students = new ObservableCollection<Student>(_course.Students);
 		}

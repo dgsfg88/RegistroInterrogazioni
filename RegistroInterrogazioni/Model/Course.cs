@@ -22,24 +22,7 @@ namespace RegistroInterrogazioni.Model
 
 		public void Save()
 		{
-			string json = JsonSerializer.Serialize(this, 
-				new JsonSerializerOptions() { WriteIndented = true });
-			File.WriteAllText(GetFileName(ID), json);
-		}
-
-		protected static string GetFileName(string id)
-			=> $"course_{id}.json";
-
-		public static Course CreateOrLoad(string id)
-		{
-			if (File.Exists(GetFileName(id)))
-			{
-				var course = JsonSerializer.Deserialize<Course>(
-					File.ReadAllText(GetFileName(id)));
-				if (course != null )
-					return course;
-			}
-			return new Course { ID = id };
+			CourseManager.Instance.Save(this);
 		}
 	}
 }
