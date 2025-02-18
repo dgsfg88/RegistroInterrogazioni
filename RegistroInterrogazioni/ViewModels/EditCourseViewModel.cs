@@ -16,7 +16,13 @@ namespace RegistroInterrogazioni.ViewModels
 	{
 		[ObservableProperty]
 		private Course _course;
-		private string courseID; 
+		private string courseID;
+
+		partial void OnCourseChanged(Course value)
+		{
+			Students = new ObservableCollection<Student>(value.Students);
+		}
+
 		[ObservableProperty]
 		ObservableCollection<Student> _students;
 
@@ -32,7 +38,13 @@ namespace RegistroInterrogazioni.ViewModels
 		{
 			this.courseID = courseID;
 			_course = CourseManager.Instance.CreateOrLoad(courseID);
+			_students = new ObservableCollection<Student>(_course.Students);
+		}
 
+		public EditCourseViewModel(Course course)
+		{
+			this.courseID = course.ID;
+			_course = course;
 			_students = new ObservableCollection<Student>(_course.Students);
 		}
 
