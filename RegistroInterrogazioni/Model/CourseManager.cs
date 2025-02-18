@@ -30,12 +30,26 @@ namespace RegistroInterrogazioni.Model
 		{
 			if (File.Exists(GetFilePath(id)))
 			{
-				var course = JsonSerializer.Deserialize<Course>(
-					File.ReadAllText(GetFilePath(id)));
+				var course = LoadCourse(GetFilePath(id));
 				if (course != null)
 					return course;
 			}
 			return new Course { ID = id };
+		}
+
+		protected Course? LoadCourse(string path)
+		{
+			return JsonSerializer.Deserialize<Course>(
+					File.ReadAllText(path));
+		}
+
+		public List<Course> GetAllCourses()
+		{
+			DirectoryInfo directoryInfo = new DirectoryInfo(WorkingPath);
+			return directoryInfo.GetFiles("course_*.json")
+				.Select(x => LoadCourse(x.FullName))
+				.OfType<Course>()
+				.ToList();
 		}
 
 		public void Save(Course course)
