@@ -1,0 +1,47 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:model="using:RegistroInterrogazioni.Model"
+             xmlns:vm="using:RegistroInterrogazioni.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="RegistroInterrogazioni.Views.SelectCourseView"
+             x:DataType="vm:SelectCourseViewModel">
+  <HeaderedContentControl Header="Courses">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition/>
+        <RowDefinition Height="auto"/>
+      </Grid.RowDefinitions>
+      <DataGrid IsReadOnly="True" ColumnWidth="*"
+                ItemsSource="{Binding Courses}">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+          <DataGridTextColumn Header="Class" Binding="{Binding ClassName}"/>
+          <DataGridTemplateColumn Header="Actions">
+            <DataTemplate>
+              <UniformGrid Columns="4">
+                <Button Content="Select" HorizontalAlignment="Center"
+                        CommandParameter="{Binding .}"
+                        Command="{Binding $parent[DataGrid].((vm:SelectCourseViewModel)DataContext).SelectCourseCommand}"/>
+                <Button Content="Edit" HorizontalAlignment="Center"
+                        CommandParameter="{Binding .}"
+                        Command="{Binding $parent[DataGrid].((vm:SelectCourseViewModel)DataContext).EditCourseCommand}"/>
+                <Button Content="Duplicate" HorizontalAlignment="Center"
+                        CommandParameter="{Binding .}"
+                        Command="{Binding $parent[DataGrid].((vm:SelectCourseViewModel)DataContext).DuplicateCourseCommand}"/>
+                <Button Content="Delete" HorizontalAlignment="Center"
+                        CommandParameter="{Binding .}"
+                        Command="{Binding $parent[DataGrid].((vm:SelectCourseViewModel)DataContext).DeleteCourseCommand}"/>
+              </UniformGrid>
+            </DataTemplate>
+          </DataGridTemplateColumn>
+        </DataGrid.Columns>
+      </DataGrid>
+      <Button Content="Create new" HorizontalAlignment="Stretch"
+              Command="{Binding CreateNewCourseCommand}"
+              HorizontalContentAlignment="Center"
+              Grid.Row="1"/>
+    </Grid>
+  </HeaderedContentControl>
+</UserControl>
