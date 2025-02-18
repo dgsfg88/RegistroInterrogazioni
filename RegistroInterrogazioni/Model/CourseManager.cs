@@ -16,7 +16,7 @@ namespace RegistroInterrogazioni.Model
 
 		private CourseManager() { }
 
-		public string WorkingPath { get; set; } = "";
+		public string WorkingPath { get; set; } = ".";
 
 		protected string GetFilePath(string id)
 		{
