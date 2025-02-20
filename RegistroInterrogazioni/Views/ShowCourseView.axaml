@@ -1,0 +1,114 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:RegistroInterrogazioni.ViewModels"
+             xmlns:conv="using:RegistroInterrogazioni.Converter"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="RegistroInterrogazioni.Views.ShowCourseView"
+             x:DataType="vm:ShowCourseViewModel">
+  <UserControl.Resources>
+    <conv:ObjectCompararerConverter x:Key="objCmpConv"/>
+  </UserControl.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="4"/>
+      <RowDefinition Height="2*"/>
+    </Grid.RowDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="auto"/>
+          <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="Course: "/>
+          <TextBlock Text="{Binding Course.Name}" FontWeight="DemiBold"/>
+          <TextBlock Text=" " FontWeight="DemiBold"/>
+          <TextBlock Text="{Binding Course.ClassName}" FontWeight="DemiBold"/>
+        </StackPanel>
+        <HeaderedContentControl Grid.Row="1" BorderBrush="Blue" 
+                                BorderThickness="1">
+          <HeaderedContentControl.Header>
+            <Grid Background="Blue">
+              <TextBlock Text="Add grade" Foreground="White"/>
+            </Grid>
+          </HeaderedContentControl.Header>
+          <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="Grade type:"
+                         VerticalAlignment="Center"/>
+              <RadioButton 
+                IsChecked="{Binding GradeSelected, Mode=TwoWay, 
+                Converter={StaticResource objCmpConv}, 
+                ConverterParameter={x:Static vm:GradeSelected.Grade}}">Grade</RadioButton>
+              <RadioButton
+                IsChecked="{Binding GradeSelected, Mode=TwoWay, 
+                Converter={StaticResource objCmpConv}, 
+                ConverterParameter={x:Static vm:GradeSelected.GradeNote}}">GradedNote</RadioButton>
+              <RadioButton
+                IsChecked="{Binding GradeSelected, Mode=TwoWay, 
+                Converter={StaticResource objCmpConv}, 
+                ConverterParameter={x:Static vm:GradeSelected.Note}}">Note</RadioButton>
+            </StackPanel>
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+              </Grid.ColumnDefinitions>
+              <TextBlock Text="Description:"/>
+              <TextBox Grid.Column="1" MaxLines="15"
+                       ScrollViewer.VerticalScrollBarVisibility="Auto"
+                       AcceptsReturn="True" AcceptsTab="True"
+                       TextWrapping="Wrap" Height="100"
+                       Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+              <TextBlock Grid.Row="1" Text="Date:" VerticalAlignment="Center"/>
+              <DatePicker DayFormat="ddd dd" Grid.Row="1" Grid.Column="1"
+                          SelectedDate="{Binding GradeDate, Mode=TwoWay}"/>
+              <TextBlock Grid.Row="2" Text="Grade:" VerticalAlignment="Center"/>
+              <Grid Grid.Row="2" Grid.Column="2"
+                    IsVisible="{Binding GradeSelected, Converter={x:Static conv:GradeTypeToVisibilityConverters.IsNotNote}}">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*"/>
+                  <ColumnDefinition Width="auto"/>
+                  <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox VerticalAlignment="Center"
+                          HorizontalAlignment="Stretch"
+                          IsVisible="{Binding GradeSelected, Converter={x:Static conv:GradeTypeToVisibilityConverters.IsGrade}}"/>
+                <ComboBox VerticalAlignment="Center"
+                          HorizontalAlignment="Stretch"
+                          IsVisible="{Binding GradeSelected, Converter={x:Static conv:GradeTypeToVisibilityConverters.IsGradeNote}}"/>
+                <TextBlock Grid.Column="1" Text="Weight:" VerticalAlignment="Center"
+                           IsVisible="{Binding GradeSelected, Converter={x:Static conv:GradeTypeToVisibilityConverters.IsGrade}}"/>
+                <Slider Grid.Column="2" Minimum="0" Maximum="100" Value="{Binding GradeWeight, Mode=TwoWay}"
+                        SmallChange="0.5" LargeChange="10"
+                        IsVisible="{Binding GradeSelected, Converter={x:Static conv:GradeTypeToVisibilityConverters.IsGrade}}"/>
+                <TextBlock Grid.Column="2" Background="#AA000000"
+                           HorizontalAlignment="Center" Foreground="White"
+                           VerticalAlignment="Center" IsHitTestVisible="False"
+                           IsVisible="{Binding GradeSelected, Converter={x:Static conv:GradeTypeToVisibilityConverters.IsGrade}}">
+                  <TextBlock Text="{Binding GradeWeight, StringFormat=0.##}"/>
+                  <TextBlock Text="%"/>
+                </TextBlock>
+              </Grid>
+            </Grid>
+          </StackPanel>
+        </HeaderedContentControl>
+      </Grid>
+    </ScrollViewer>
+    <GridSplitter Grid.Row="1" ResizeDirection="Rows"
+                  Background="Gray"/>
+    <DataGrid VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+              ColumnWidth="*">
+      
+    </DataGrid>
+  </Grid>
+</UserControl>
