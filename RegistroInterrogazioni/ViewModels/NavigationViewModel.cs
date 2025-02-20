@@ -40,6 +40,11 @@ namespace RegistroInterrogazioni.ViewModels
 			eventArgs.Handled = true;
 		}
 
+		public void ShowCourse(Course course)
+		{
+			ContentToShow = new ShowCourseView(course);
+		}
+
 		public void EditCourse(Course course)
 		{
 			ContentToShow = new EditCourseView(course);
