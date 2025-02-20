@@ -31,7 +31,13 @@ namespace RegistroInterrogazioni.ViewModels
 			}
 		}
 		[RelayCommand]
-		private void SelectCourse(Course course) { }
+		private void SelectCourse(Course course) 
+		{
+			if (Parent is NavigationViewModel navigationViewModel)
+			{
+				navigationViewModel.ShowCourse(course);
+			}
+		}
 		[RelayCommand]
 		private void DeleteCourse(Course course) 
 		{
