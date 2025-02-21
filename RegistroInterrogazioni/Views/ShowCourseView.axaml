@@ -16,99 +16,133 @@
       <RowDefinition Height="4"/>
       <RowDefinition Height="2*"/>
     </Grid.RowDefinitions>
-    <ScrollViewer VerticalScrollBarVisibility="Auto"
-                  HorizontalScrollBarVisibility="Disabled">
-      <Grid>
-        <Grid.RowDefinitions>
-          <RowDefinition Height="auto"/>
-          <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal">
-          <TextBlock Text="Course: "/>
-          <TextBlock Text="{Binding Course.Name}" FontWeight="DemiBold"/>
-          <TextBlock Text=" " FontWeight="DemiBold"/>
-          <TextBlock Text="{Binding Course.ClassName}" FontWeight="DemiBold"/>
-        </StackPanel>
-        <HeaderedContentControl Grid.Row="1" BorderBrush="Blue" 
-                                BorderThickness="1">
-          <HeaderedContentControl.Header>
-            <Grid Background="Blue">
-              <TextBlock Text="Add grade" Foreground="White"/>
-            </Grid>
-          </HeaderedContentControl.Header>
-          <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal">
-              <TextBlock Text="Grade type:"
-                         VerticalAlignment="Center"/>
-              <RadioButton 
-                IsChecked="{Binding GradeSelected, Mode=TwoWay, 
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="auto"/>
+      </Grid.RowDefinitions>
+      <ScrollViewer VerticalScrollBarVisibility="Auto"
+                    HorizontalScrollBarVisibility="Disabled">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+          </Grid.RowDefinitions>
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Course: "/>
+            <TextBlock Text="{Binding Course.Name}" FontWeight="DemiBold"/>
+            <TextBlock Text=" " FontWeight="DemiBold"/>
+            <TextBlock Text="{Binding Course.ClassName}" FontWeight="DemiBold"/>
+          </StackPanel>
+          <HeaderedContentControl Grid.Row="1" BorderBrush="Blue"
+                                  BorderThickness="1">
+            <HeaderedContentControl.Header>
+              <Grid Background="Blue">
+                <TextBlock Text="Add grade" Foreground="White"/>
+              </Grid>
+            </HeaderedContentControl.Header>
+            <StackPanel Orientation="Vertical">
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Grade type:"
+                           VerticalAlignment="Center"/>
+                <RadioButton
+                  IsChecked="{Binding GradeSelected, Mode=TwoWay, 
                 Converter={StaticResource objCmpConv}, 
                 ConverterParameter={x:Static vm:GradeSelected.Grade}}">Grade</RadioButton>
-              <RadioButton
-                IsChecked="{Binding GradeSelected, Mode=TwoWay, 
+                <RadioButton
+                  IsChecked="{Binding GradeSelected, Mode=TwoWay, 
                 Converter={StaticResource objCmpConv}, 
                 ConverterParameter={x:Static vm:GradeSelected.GradeNote}}">GradedNote</RadioButton>
-              <RadioButton
-                IsChecked="{Binding GradeSelected, Mode=TwoWay, 
+                <RadioButton
+                  IsChecked="{Binding GradeSelected, Mode=TwoWay, 
                 Converter={StaticResource objCmpConv}, 
                 ConverterParameter={x:Static vm:GradeSelected.Note}}">Note</RadioButton>
-            </StackPanel>
-            <Grid>
-              <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-              </Grid.RowDefinitions>
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
-              </Grid.ColumnDefinitions>
-              <TextBlock Text="Description:"/>
-              <TextBox Grid.Column="1" MaxLines="15"
-                       ScrollViewer.VerticalScrollBarVisibility="Auto"
-                       AcceptsReturn="True" AcceptsTab="True"
-                       TextWrapping="Wrap" Height="100"
-                       Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-              <TextBlock Grid.Row="1" Text="Date:" VerticalAlignment="Center"/>
-              <DatePicker DayFormat="ddd dd" Grid.Row="1" Grid.Column="1"
-                          SelectedDate="{Binding GradeDate, Mode=TwoWay}"/>
-              <TextBlock Grid.Row="2" Text="Grade:" VerticalAlignment="Center"/>
-              <Grid Grid.Row="2" Grid.Column="2"
-                    IsVisible="{Binding GradeSelected, Converter={x:Static conv:GradeTypeToVisibilityConverters.IsNotNote}}">
+              </StackPanel>
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="auto"/>
+                  <RowDefinition Height="auto"/>
+                  <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="*"/>
                   <ColumnDefinition Width="auto"/>
-                  <ColumnDefinition Width="3*"/>
+                  <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <ComboBox VerticalAlignment="Center"
-                          HorizontalAlignment="Stretch"
+                <TextBlock Text="Description:"/>
+                <TextBox Grid.Column="1" MaxLines="15"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto"
+                         AcceptsReturn="True" AcceptsTab="True"
+                         TextWrapping="Wrap" Height="100"
+                         Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Grid.Row="1" Text="Date:" VerticalAlignment="Center"/>
+                <DatePicker DayFormat="ddd dd" Grid.Row="1" Grid.Column="1"
+                            SelectedDate="{Binding GradeDate, Mode=TwoWay}"/>
+                <TextBlock Grid.Row="2" Text="Grade:" VerticalAlignment="Center"/>
+                <Grid Grid.Row="2" Grid.Column="2"
+                      IsVisible="{Binding GradeSelected, Converter={x:Static conv:GradeTypeToVisibilityConverters.IsNotNote}}">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="3*"/>
+                  </Grid.ColumnDefinitions>
+                  <ComboBox VerticalAlignment="Center"
+                            HorizontalAlignment="Stretch"
+                            ItemsSource="{Binding GradeValues}"
+                            SelectedItem="{Binding GradeValue, Mode=TwoWay}"
+                            IsVisible="{Binding GradeSelected, Converter={x:Static conv:GradeTypeToVisibilityConverters.IsGrade}}"/>
+                  <ComboBox VerticalAlignment="Center"
+                            HorizontalAlignment="Stretch"
+                            ItemsSource="{Binding GradeNoteValues}"
+                            SelectedItem="{Binding GradeNoteState, Mode=TwoWay}"
+                            IsVisible="{Binding GradeSelected, Converter={x:Static conv:GradeTypeToVisibilityConverters.IsGradeNote}}"/>
+                  <TextBlock Grid.Column="1" Text="Weight:" VerticalAlignment="Center"
+                             IsVisible="{Binding GradeSelected, Converter={x:Static conv:GradeTypeToVisibilityConverters.IsGrade}}"/>
+                  <Slider Grid.Column="2" Minimum="0" Maximum="100" Value="{Binding GradeWeight, Mode=TwoWay}"
+                          SmallChange="0.5" LargeChange="10"
                           IsVisible="{Binding GradeSelected, Converter={x:Static conv:GradeTypeToVisibilityConverters.IsGrade}}"/>
-                <ComboBox VerticalAlignment="Center"
-                          HorizontalAlignment="Stretch"
-                          IsVisible="{Binding GradeSelected, Converter={x:Static conv:GradeTypeToVisibilityConverters.IsGradeNote}}"/>
-                <TextBlock Grid.Column="1" Text="Weight:" VerticalAlignment="Center"
-                           IsVisible="{Binding GradeSelected, Converter={x:Static conv:GradeTypeToVisibilityConverters.IsGrade}}"/>
-                <Slider Grid.Column="2" Minimum="0" Maximum="100" Value="{Binding GradeWeight, Mode=TwoWay}"
-                        SmallChange="0.5" LargeChange="10"
-                        IsVisible="{Binding GradeSelected, Converter={x:Static conv:GradeTypeToVisibilityConverters.IsGrade}}"/>
-                <TextBlock Grid.Column="2" Background="#AA000000"
-                           HorizontalAlignment="Center" Foreground="White"
-                           VerticalAlignment="Center" IsHitTestVisible="False"
-                           IsVisible="{Binding GradeSelected, Converter={x:Static conv:GradeTypeToVisibilityConverters.IsGrade}}">
-                  <TextBlock Text="{Binding GradeWeight, StringFormat=0.##}"/>
-                  <TextBlock Text="%"/>
-                </TextBlock>
+                  <TextBlock Grid.Column="2" Background="#AA000000"
+                             HorizontalAlignment="Center" Foreground="White"
+                             VerticalAlignment="Center" IsHitTestVisible="False"
+                             IsVisible="{Binding GradeSelected, Converter={x:Static conv:GradeTypeToVisibilityConverters.IsGrade}}">
+                    <TextBlock Text="{Binding GradeWeight, StringFormat=0.##}"/>
+                    <TextBlock Text="%"/>
+                  </TextBlock>
+                </Grid>
               </Grid>
-            </Grid>
-          </StackPanel>
-        </HeaderedContentControl>
-      </Grid>
-    </ScrollViewer>
+            </StackPanel>
+          </HeaderedContentControl>
+        </Grid>
+      </ScrollViewer>
+      <UniformGrid Columns="2" Grid.Row="1">
+        <Button Content="Random assessment" 
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+        <Button Content="Random question" 
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+      </UniformGrid>
+    </Grid>
     <GridSplitter Grid.Row="1" ResizeDirection="Rows"
                   Background="Gray"/>
     <DataGrid VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
-              ColumnWidth="*">
-      
+              ColumnWidth="*" ItemsSource="{Binding Students}"
+              GridLinesVisibility="All" Grid.Row="2">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Surname" Binding="{Binding LastName}"/>
+        <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+        <DataGridTextColumn Width="auto" Header="Grades" Binding="{Binding Grades.Count}"/>
+        <DataGridTextColumn Width="auto" Header="Graded notes" Binding="{Binding GradeNotes.Count}"/>
+        <DataGridTextColumn Width="auto" Header="Notes" Binding="{Binding Notes.Count}"/>
+        <DataGridTextColumn Width="auto" Header="Grades weight" Binding="{Binding GradesWeight, StringFormat=0.##}"/>
+        <DataGridTextColumn Width="auto" Header="Graded notes weight" Binding="{Binding GradeNotesWeight, StringFormat=0.##}"/>
+        <DataGridTextColumn Width="auto" Header="Partecipation Grade" Binding="{Binding PartecipationGrade, StringFormat=0.##}"/>
+        <DataGridTextColumn Width="auto" Header="Mean Grade" Binding="{Binding MeanGrade, StringFormat=0.##}"/>
+        <DataGridTemplateColumn Header="Action" Width="auto">
+          <DataTemplate>
+            <Button Content="Add" HorizontalAlignment="Center"
+                    CommandParameter="{Binding .}"
+                    Command="{Binding $parent[DataGrid].((vm:ShowCourseViewModel)DataContext).AddGradeCommand}"/>
+          </DataTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
     </DataGrid>
   </Grid>
 </UserControl>
