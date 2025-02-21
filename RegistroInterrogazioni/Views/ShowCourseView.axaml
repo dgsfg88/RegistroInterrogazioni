@@ -115,9 +115,11 @@
       </ScrollViewer>
       <UniformGrid Columns="2" Grid.Row="1">
         <Button Content="Random assessment" 
-                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                Command="{Binding AssesmentDrawCommand}"/>
         <Button Content="Random question" 
-                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                Command="{Binding QuestionDrawCommand}"/>
       </UniformGrid>
     </Grid>
     <GridSplitter Grid.Row="1" ResizeDirection="Rows"
@@ -126,6 +128,7 @@
               ColumnWidth="*" ItemsSource="{Binding Students}"
               GridLinesVisibility="All" Grid.Row="2">
       <DataGrid.Columns>
+        <DataGridTextColumn Width="auto" Header="Draw result" Binding="{Binding DrawPosition}"/>
         <DataGridTextColumn Header="Surname" Binding="{Binding LastName}"/>
         <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
         <DataGridTextColumn Width="auto" Header="Grades" Binding="{Binding Grades.Count}"/>

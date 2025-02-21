@@ -20,6 +20,8 @@ namespace RegistroInterrogazioni.ViewModels
 
 	internal partial class ShowCourseViewModel : ViewModelBase
 	{
+		private Random random = new Random();
+
 		[ObservableProperty]
 		private Course _Course;
 		[ObservableProperty]
@@ -72,6 +74,31 @@ namespace RegistroInterrogazioni.ViewModels
 			}
 		}
 
+		[RelayCommand]
+		private void AssesmentDraw()
+		{
+			WeightedShuffle((x) => x.GradesWeight);
+		}
+
+		[RelayCommand]
+		private void QuestionDraw()
+		{
+			WeightedShuffle((x) => x.GradeNotesWeight);
+		}
+
+		private List<int> WeightedShuffle(Func<ObservableStudent, double> getWeight)
+		{
+			var weights = Students.Select(x => (1 + getWeight(x)) / (x.IsDSA ? 0.75 : 1)).ToList();
+
+			var order = Enumerable.Range(0, weights.Count)
+			.OrderByDescending(i => Math.Pow(random.NextDouble(), 1.0 / weights[i]))
+			.ToList();
+
+			for (int i = 0; i < order.Count; i++)
+				Students[order[i]].DrawPosition = order.Count - i;
+
+			return order;
+		}
 
 		[RelayCommand(CanExecute=nameof(IsAddGradeEnabled))]
 		private void AddGrade(ObservableStudent student)

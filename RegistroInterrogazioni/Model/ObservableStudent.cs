@@ -26,6 +26,9 @@ namespace RegistroInterrogazioni.Model
 		public double GradeNotesWeight => student.GradeNotesWeight;
 		public double PartecipationGrade => student.PartecipationGrade;
 
+		[ObservableProperty]
+		private int _drawPosition = 0;
+
 		public double MeanGrade
 		{
 			get
