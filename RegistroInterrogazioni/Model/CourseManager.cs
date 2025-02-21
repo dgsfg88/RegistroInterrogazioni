@@ -60,7 +60,7 @@ namespace RegistroInterrogazioni.Model
 		public void Save(Course course)
 		{
 			string json = JsonSerializer.Serialize(course,
-				new JsonSerializerOptions() { WriteIndented = true });
+				new JsonSerializerOptions() { WriteIndented = true, IgnoreReadOnlyProperties = true });
 			File.WriteAllText(GetFilePath(course.ID), json);
 		}
 	}
