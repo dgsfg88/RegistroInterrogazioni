@@ -36,9 +36,7 @@ namespace RegistroInterrogazioni.ViewModels
 		}
 
 		protected override void OnReturnBack(RoutedEventArgs eventArgs)
-		{
-			eventArgs.Handled = true;
-		}
+			=> OnReturnHome(eventArgs);
 
 		public void ShowCourse(Course course)
 		{
