@@ -13,7 +13,7 @@ namespace RegistroInterrogazioni.Model
 		public DateTime DateTime { get; set ; }
 		public string Notes {  get; set ; } = string.Empty;
 		[Required]
-		public int GradeValue { get; set ; }
+		public double GradeValue { get; set ; }
 		[Required]
 		public double GradeCost { get; set; } = 1;
 	}
