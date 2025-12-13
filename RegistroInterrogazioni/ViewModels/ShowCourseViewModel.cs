@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace RegistroInterrogazioni.ViewModels
 {
-	internal enum GradeSelected
+	public enum GradeSelected
 	{
 		Note,
 		Grade,
 		GradeNote
 	}
 
-	internal partial class ShowCourseViewModel : ViewModelBase
+	public partial class ShowCourseViewModel : ViewModelBase
 	{
 		private Random random = new Random();
 
@@ -52,6 +52,8 @@ namespace RegistroInterrogazioni.ViewModels
 			Students = new ObservableCollection<ObservableStudent>(
 				value.Students.Select(x => new ObservableStudent(x)));
 		}
+
+		public ShowCourseViewModel() : this(new Course()) { }
 
 		public ShowCourseViewModel(Course course)
 		{

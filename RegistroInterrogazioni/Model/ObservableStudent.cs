@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RegistroInterrogazioni.Model
 {
-	internal partial class ObservableStudent : ObservableObject
+	public partial class ObservableStudent : ObservableObject
 	{
 		private Student student;
 
