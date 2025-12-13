@@ -9,6 +9,7 @@ namespace RegistroInterrogazioni.Model
 {
 	internal interface IStudentNote
 	{
+		public int ID { get; set; }
 		[Required]
 		public DateTime DateTime { get; set; }
 	}

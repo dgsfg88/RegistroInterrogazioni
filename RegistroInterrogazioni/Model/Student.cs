@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RegistroInterrogazioni.Model
 {
-	internal class Student
+	public class Student
 	{
 		public int ID { get; set; }
 		public string Name { get; set; } = string.Empty;

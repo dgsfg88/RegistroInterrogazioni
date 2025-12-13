@@ -7,18 +7,19 @@ using System.Threading.Tasks;
 
 namespace RegistroInterrogazioni.Model
 {
-	internal enum GradeNoteState
+	public enum GradeNoteState
 	{
 		None,
 		Negative,
 		Positive
 	}
-	internal class GradeNote : IStudentNote
+	public class GradeNote : IStudentNote
 	{
 		[Required]
 		public DateTime DateTime { get; set; }
 		public string Description { get; set; } = string.Empty;
 		[Required]
 		public GradeNoteState State { get; set; } = GradeNoteState.None;
+		public int ID { get; set; } = -1;
 	}
 }

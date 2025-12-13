@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RegistroInterrogazioni.Model
 {
-	internal class Grade : IStudentNote
+	public class Grade : IStudentNote
 	{
 		[Required]
 		public DateTime DateTime { get; set ; }
@@ -16,5 +16,6 @@ namespace RegistroInterrogazioni.Model
 		public double GradeValue { get; set ; }
 		[Required]
 		public double GradeCost { get; set; } = 1;
+		public int ID { get; set; } = -1;
 	}
 }
