@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -55,6 +56,35 @@ namespace RegistroInterrogazioni.Model
 				.Select(x => LoadCourse(x.FullName))
 				.OfType<Course>()
 				.ToList();
+		}
+
+		public void ExportGradesCSV(DateTime from, DateTime to, string path = ".")
+		{
+			var csvText = string.Join("\n",
+			GetAllCourses().SelectMany(course =>
+			course.Students.SelectMany(
+				student => 
+				GetStudentCSV(course.ClassName + " " + course.Name, from, to, student))));
+
+			File.WriteAllText(Path.Combine(path, $"Export{DateTime.Now.ToString("yyyy.MM.dd")}.csv"),
+				csvText);
+		}
+
+		private static IEnumerable<string> GetStudentCSV(string courseID, DateTime from, DateTime to, Student student)
+		{
+			var gradesCSV = student.Grades
+				.Where(grade => grade.DateTime > from && grade.DateTime < to)
+				.Select(grade => $"{grade.DateTime.ToString("yyyy.MM.dd.HH.ss")};{courseID};Grade;{student.LastName};{student.Name};{grade.GradeValue.ToString("0.##", CultureInfo.InvariantCulture)};{(grade.GradeCost * 100).ToString("0")};{grade.Notes}");
+
+			var n_gradesCSV = student.GradeNotes
+				.Where(grade => grade.DateTime > from && grade.DateTime < to)
+				.Select(grade => $"{grade.DateTime.ToString("yyyy.MM.dd.HH.ss")};{courseID};GradeNote;{student.LastName};{student.Name};{grade.State};;{grade.Description}");
+
+			var notesCSV = student.Notes
+				.Where(grade => grade.DateTime > from && grade.DateTime < to)
+				.Select(grade => $"{grade.DateTime.ToString("yyyy.MM.dd.HH.ss")};{courseID};Note;{student.LastName};{student.Name};;;{grade.NoteValue}");
+
+			return gradesCSV.Concat(n_gradesCSV).Concat(notesCSV);
 		}
 
 		public void Save(Course course)
