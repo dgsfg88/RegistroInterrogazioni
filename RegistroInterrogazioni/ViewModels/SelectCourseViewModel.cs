@@ -73,5 +73,11 @@ namespace RegistroInterrogazioni.ViewModels
 				navigationViewModel.EditCourse(course);
 			}
 		}
+
+		[RelayCommand]
+		private void ExportCSV()
+		{
+			CourseManager.Instance.ExportGradesCSV(DateTime.MinValue, DateTime.MaxValue);
+		}
 	}
 }

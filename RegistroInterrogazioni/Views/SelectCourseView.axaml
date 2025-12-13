@@ -38,10 +38,14 @@
           </DataGridTemplateColumn>
         </DataGrid.Columns>
       </DataGrid>
-      <Button Content="Create new" HorizontalAlignment="Stretch"
-              Command="{Binding CreateNewCourseCommand}"
-              HorizontalContentAlignment="Center"
-              Grid.Row="1"/>
+      <UniformGrid Columns="2" Grid.Row="1">
+        <Button Content="Create new" HorizontalAlignment="Stretch"
+                Command="{Binding CreateNewCourseCommand}"
+                HorizontalContentAlignment="Center"/>
+        <Button Content="Export CSV" HorizontalAlignment="Stretch"
+                Command="{Binding ExportCSVCommand}"
+                HorizontalContentAlignment="Center"/>
+      </UniformGrid>
     </Grid>
   </HeaderedContentControl>
 </UserControl>
